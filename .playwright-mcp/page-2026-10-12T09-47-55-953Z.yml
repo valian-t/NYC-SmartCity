@@ -1,0 +1,1508 @@
+- generic [active] [ref=e1]:
+  - generic:
+    - generic:
+      - generic: Smart City NYC
+      - generic: Initializing SparkSession...
+      - generic:
+        - generic: ✓ Java 17 detected
+        - generic: ✓ PySpark 3.5.1 loaded
+        - generic: ✓ local[*] — 4 cores ready
+        - generic: ✓ AQE enabled
+        - generic: ✓ Pipeline ready
+  - generic [ref=e2]:
+    - navigation [ref=e3]:
+      - generic [ref=e4]:
+        - generic [ref=e5]: 🏙️
+        - generic [ref=e6]:
+          - text: Smart City
+          - emphasis [ref=e7]: NYC
+      - generic [ref=e8]:
+        - button "Home" [ref=e9] [cursor=pointer]
+        - button "Spark Map" [ref=e10] [cursor=pointer]
+        - button "DAG" [ref=e11] [cursor=pointer]
+        - button "Setup" [ref=e12] [cursor=pointer]
+        - button "Live Fetch" [ref=e13] [cursor=pointer]
+        - button "Ingest" [ref=e14] [cursor=pointer]
+        - button "Distribute" [ref=e15] [cursor=pointer]
+        - button "Clean" [ref=e16] [cursor=pointer]
+        - button "Queries" [ref=e17] [cursor=pointer]
+        - button "Optimize" [ref=e18] [cursor=pointer]
+        - button "Benchmark" [ref=e19] [cursor=pointer]
+        - button "Insights" [ref=e20] [cursor=pointer]
+      - generic [ref=e21]:
+        - generic [ref=e23]: Spark Active
+        - generic [ref=e24]: v3.5.1
+    - generic [ref=e25]:
+      - generic [ref=e27]: Case Study 2 · Unit 5.2 DataFrames · PySpark + Pandas
+      - heading "NYC Smart City Data Pipeline" [level=1] [ref=e29]:
+        - generic [ref=e30]: NYC Smart City
+        - generic [ref=e31]: Data Pipeline
+      - paragraph [ref=e32]:
+        - text: An end-to-end
+        - strong [ref=e33]: PySpark pipeline
+        - text: ingesting 6 live NYC data sources, processing 3M+ rows across 4 CPU cores, answering 10 analytical queries, and achieving up to
+        - strong [ref=e34]: 8.4× speedup
+        - text: through optimizations.
+      - generic [ref=e35]:
+        - generic [ref=e36]:
+          - generic [ref=e37]: 1,533,780
+          - text: Taxi Trips
+        - generic [ref=e38]:
+          - generic [ref=e39]: 142,439
+          - text: 311 Requests
+        - generic [ref=e40]:
+          - generic [ref=e41]: "6"
+          - text: Data Sources
+        - generic [ref=e42]:
+          - generic [ref=e43]: "10"
+          - text: Queries
+        - generic [ref=e44]:
+          - generic [ref=e45]: 8.4×
+          - text: Max Speedup
+        - generic [ref=e46]:
+          - generic [ref=e47]: "4"
+          - text: CPU Cores
+      - generic [ref=e48]:
+        - button "🗺️ Explore Pipeline" [ref=e49] [cursor=pointer]:
+          - generic [ref=e50]: 🗺️
+          - text: Explore Pipeline
+        - button "⚡ Live Data Fetch" [ref=e51] [cursor=pointer]:
+          - generic [ref=e52]: ⚡
+          - text: Live Data Fetch
+      - generic [ref=e53]:
+        - generic [ref=e54]: 📥Ingest
+        - generic [ref=e55]: →
+        - generic [ref=e56]: 🔧Clean
+        - generic [ref=e57]: →
+        - generic [ref=e58]: 🔀Distribute
+        - generic [ref=e59]: →
+        - generic [ref=e60]: 🔍Query
+        - generic [ref=e61]: →
+        - generic [ref=e62]: ⚡Optimize
+        - generic [ref=e63]: →
+        - generic [ref=e64]: 📊Output
+      - generic [ref=e65]: scroll to explore
+    - generic [ref=e68]:
+      - generic [ref=e69]:
+        - generic [ref=e70]: 🔥
+        - generic [ref=e71]:
+          - heading "Where Spark Is Used — Complete Map" [level=2] [ref=e72]
+          - paragraph [ref=e73]: Every PySpark API call, every DataFrame operation, every action in this pipeline
+      - generic [ref=e74]:
+        - generic [ref=e75]:
+          - generic [ref=e76]: 🚀
+          - generic [ref=e77]: SETUP
+          - generic [ref=e78]: SparkSession
+          - generic [ref=e79]: Entry point to all Spark operations. Configured once with master, memory, and AQE settings.
+          - generic [ref=e80]:
+            - generic [ref=e81]: SparkSession.builder
+            - generic [ref=e82]: .master("local[*]")
+            - generic [ref=e83]: .getOrCreate()
+            - generic [ref=e84]: spark.version
+            - generic [ref=e85]: spark.sparkContext
+        - generic [ref=e86]:
+          - generic [ref=e87]: 📥
+          - generic [ref=e88]: READER
+          - generic [ref=e89]: Data Reading (DataFrameReader)
+          - generic [ref=e90]: Reading 6 different source formats into typed Spark DataFrames with explicit schemas.
+          - generic [ref=e91]:
+            - generic [ref=e92]: spark.read.parquet()
+            - generic [ref=e93]: spark.read.csv()
+            - generic [ref=e94]: spark.read.json()
+            - generic [ref=e95]: StructType / StructField
+            - generic [ref=e96]: printSchema()
+            - generic [ref=e97]: count()
+        - generic [ref=e98]:
+          - generic [ref=e99]: 🔧
+          - generic [ref=e100]: TRANSFORMATION
+          - generic [ref=e101]: Narrow Transformations
+          - generic [ref=e102]: No data movement — each partition processed independently. These build the lazy DAG.
+          - generic [ref=e103]:
+            - generic [ref=e104]: filter() / where()
+            - generic [ref=e105]: select()
+            - generic [ref=e106]: withColumn()
+            - generic [ref=e107]: fillna()
+            - generic [ref=e108]: drop()
+            - generic [ref=e109]: cast()
+            - generic [ref=e110]: alias()
+        - generic [ref=e111]:
+          - generic [ref=e112]: 🔀
+          - generic [ref=e113]: TRANSFORMATION (WIDE)
+          - generic [ref=e114]: Wide Transformations / Shuffle
+          - generic [ref=e115]: Rows move across partitions. Spark creates a new Stage at each wide transformation.
+          - generic [ref=e116]:
+            - generic [ref=e117]: groupBy().agg()
+            - generic [ref=e118]: join() / broadcast()
+            - generic [ref=e119]: orderBy()
+            - generic [ref=e120]: distinct()
+            - generic [ref=e121]: repartition()
+            - generic [ref=e122]: pivot()
+        - generic [ref=e123]:
+          - generic [ref=e124]: ⚡
+          - generic [ref=e125]: ACTION
+          - generic [ref=e126]: Actions (trigger execution)
+          - generic [ref=e127]: Actions force Spark to execute the full DAG. Everything before is just a plan.
+          - generic [ref=e128]:
+            - generic [ref=e129]: count()
+            - generic [ref=e130]: show()
+            - generic [ref=e131]: toPandas()
+            - generic [ref=e132]: collect()
+            - generic [ref=e133]: write.parquet()
+            - generic [ref=e134]: write.csv()
+        - generic [ref=e135]:
+          - generic [ref=e136]: 🪟
+          - generic [ref=e137]: WINDOW FUNCTIONS
+          - generic [ref=e138]: Window Functions
+          - generic [ref=e139]: Calculations over groups of rows without collapsing them. Used in Q4, Q6, and traffic cleaning.
+          - generic [ref=e140]:
+            - generic [ref=e141]: Window.partitionBy()
+            - generic [ref=e142]: Window.orderBy()
+            - generic [ref=e143]: row_number()
+            - generic [ref=e144]: dense_rank()
+            - generic [ref=e145]: sum().over()
+        - generic [ref=e146]:
+          - generic [ref=e147]: 🧠
+          - generic [ref=e148]: SQL API
+          - generic [ref=e149]: Spark SQL
+          - generic [ref=e150]: SQL syntax as an alternative to DataFrame API — same optimizer, same performance.
+          - generic [ref=e151]:
+            - generic [ref=e152]: createOrReplaceTempView()
+            - generic [ref=e153]: spark.sql()
+            - generic [ref=e154]: date_trunc()
+            - generic [ref=e155]: percentile_approx()
+            - generic [ref=e156]: try_cast()
+        - generic [ref=e157]:
+          - generic [ref=e158]: ⚡
+          - generic [ref=e159]: OPTIMIZATION
+          - generic [ref=e160]: Performance Optimizations
+          - generic [ref=e161]: Five measured optimizations that reduce job time from 2.3s to 0.22s.
+          - generic [ref=e162]:
+            - generic [ref=e163]: cache() / persist()
+            - generic [ref=e164]: F.broadcast()
+            - generic [ref=e165]: sql.shuffle.partitions
+            - generic [ref=e166]: adaptive.enabled
+            - generic [ref=e167]: Parquet format
+      - generic [ref=e168]:
+        - generic [ref=e169]:
+          - generic [ref=e170]: 📚
+          - heading "Complete PySpark API Usage — This Project" [level=3] [ref=e171]
+        - table [ref=e173]:
+          - rowgroup [ref=e174]:
+            - row [ref=e175]:
+              - columnheader "API / Method" [ref=e176]
+              - columnheader "Type" [ref=e177]
+              - columnheader "Used In" [ref=e178]
+              - columnheader "What It Does Here" [ref=e179]
+          - rowgroup [ref=e180]:
+            - row [ref=e181]:
+              - cell "SparkSession.builder.getOrCreate()" [ref=e182]
+              - cell "Setup" [ref=e183]
+              - cell "Step 1" [ref=e184]
+              - cell "Creates the Spark driver — entry point to all operations" [ref=e185]
+            - row [ref=e186]:
+              - cell "spark.read.parquet(path)" [ref=e187]
+              - cell "Reader" [ref=e188]
+              - cell "Taxi Trips" [ref=e189]
+              - cell "Reads columnar Parquet file (50MB, 3M rows) into DataFrame" [ref=e190]
+            - row [ref=e191]:
+              - cell "spark.read.csv(path, schema=…)" [ref=e192]
+              - cell "Reader" [ref=e193]
+              - cell "Taxi Zones, 311" [ref=e194]
+              - cell "Reads CSV with explicit StructType — no inferSchema overhead" [ref=e195]
+            - row [ref=e196]:
+              - cell "spark.read.json(path)" [ref=e197]
+              - cell "Reader" [ref=e198]
+              - cell "Air Quality, Weather, Traffic" [ref=e199]
+              - cell "Reads multi-line JSON from API responses" [ref=e200]
+            - row [ref=e201]:
+              - cell "arrays_zip() + explode()" [ref=e202]
+              - cell "Transformation" [ref=e203]
+              - cell "Air Quality, Weather" [ref=e204]
+              - cell "Flattens parallel JSON arrays into one row per hour" [ref=e205]
+            - row [ref=e206]:
+              - cell "repartition(8)" [ref=e207]
+              - cell "Transformation" [ref=e208]
+              - cell "Step 3" [ref=e209]
+              - cell "Redistributes data evenly (causes shuffle) for better parallelism" [ref=e210]
+            - row [ref=e211]:
+              - cell "filter() / where()" [ref=e212]
+              - cell "Transformation" [ref=e213]
+              - cell "Cleaning" [ref=e214]
+              - cell "Applies 6 quality rules to remove 136k bad trip rows" [ref=e215]
+            - row [ref=e216]:
+              - cell "withColumn()" [ref=e217]
+              - cell "Transformation" [ref=e218]
+              - cell "Cleaning, Enrichment" [ref=e219]
+              - cell "Adds pickup_hour, trip_duration, tip_pct, payment_method" [ref=e220]
+            - row [ref=e221]:
+              - cell "fillna(1)" [ref=e222]
+              - cell "Transformation" [ref=e223]
+              - cell "Cleaning" [ref=e224]
+              - cell "Fills missing passenger_count with 1" [ref=e225]
+            - row [ref=e226]:
+              - cell "dropDuplicates([\"unique_key\"])" [ref=e227]
+              - cell "Transformation" [ref=e228]
+              - cell "311 Cleaning" [ref=e229]
+              - cell "Removes 2,103 duplicate API page records" [ref=e230]
+            - row [ref=e231]:
+              - cell "try_cast(col, TimestampType())" [ref=e232]
+              - cell "Transformation" [ref=e233]
+              - cell "311 Cleaning" [ref=e234]
+              - cell "Safe date parse — returns null instead of crashing" [ref=e235]
+            - row [ref=e236]:
+              - cell "create_map()" [ref=e237]
+              - cell "Transformation" [ref=e238]
+              - cell "Enrichment" [ref=e239]
+              - cell "Maps payment_type codes (1,2,3,4) to labels" [ref=e240]
+            - row [ref=e241]:
+              - cell "groupBy().agg(count, avg)" [ref=e242]
+              - cell "Transformation (wide)" [ref=e243]
+              - cell "Q1, Q4, Q5, Q9" [ref=e244]
+              - cell "Groups and aggregates — requires shuffle between partitions" [ref=e245]
+            - row [ref=e246]:
+              - cell "join(zones, on=\"LocationID\")" [ref=e247]
+              - cell "Transformation (wide)" [ref=e248]
+              - cell "Q2, Q7, Q8, Q10" [ref=e249]
+              - cell "Joins DataFrames on a key — sort-merge or broadcast" [ref=e250]
+            - row [ref=e251]:
+              - cell "F.broadcast(zones_df)" [ref=e252]
+              - cell "Optimization" [ref=e253]
+              - cell "Q2, Q10" [ref=e254]
+              - cell "Copies 265-row zones table to every task — eliminates shuffle" [ref=e255]
+            - row [ref=e256]:
+              - cell "pivot(\"pickup_hour\")" [ref=e257]
+              - cell "Transformation (wide)" [ref=e258]
+              - cell "Q3" [ref=e259]
+              - cell "Turns hour values (0–23) into 24 separate columns" [ref=e260]
+            - row [ref=e261]:
+              - cell "Window.partitionBy().orderBy()" [ref=e262]
+              - cell "Window Function" [ref=e263]
+              - cell "Q4, Q6, Traffic" [ref=e264]
+              - cell "Computes rank/sum per group without GROUP BY collapsing" [ref=e265]
+            - row [ref=e266]:
+              - cell "dense_rank()" [ref=e267]
+              - cell "Window Function" [ref=e268]
+              - cell "Q6" [ref=e269]
+              - cell "Ranks complaints within each borough — gets top-3" [ref=e270]
+            - row [ref=e271]:
+              - cell "row_number()" [ref=e272]
+              - cell "Window Function" [ref=e273]
+              - cell "Traffic Cleaning" [ref=e274]
+              - cell "Keeps only latest reading per road sensor" [ref=e275]
+            - row [ref=e276]:
+              - cell "corr(\"trips\", \"no2\")" [ref=e277]
+              - cell "Action" [ref=e278]
+              - cell "Q7, Q8" [ref=e279]
+              - cell "Computes Pearson correlation — triggers a full job" [ref=e280]
+            - row [ref=e281]:
+              - cell "createOrReplaceTempView(\"trips\")" [ref=e282]
+              - cell "SQL" [ref=e283]
+              - cell "Q1 (SQL version)" [ref=e284]
+              - cell "Registers DataFrame as SQL table — same optimizer as API" [ref=e285]
+            - row [ref=e286]:
+              - cell "spark.sql(\"SELECT ...\")" [ref=e287]
+              - cell "SQL" [ref=e288]
+              - cell "Q1 (SQL version)" [ref=e289]
+              - cell "Executes SQL string — identical plan to DataFrame chain" [ref=e290]
+            - row [ref=e291]:
+              - cell "count()" [ref=e292]
+              - cell "Action" [ref=e293]
+              - cell "All cleaning steps" [ref=e294]
+              - cell "Forces DAG execution — proves lazy evaluation timing" [ref=e295]
+            - row [ref=e296]:
+              - cell "toPandas()" [ref=e297]
+              - cell "Action" [ref=e298]
+              - cell "All queries" [ref=e299]
+              - cell "Collects small Spark result to driver for charting" [ref=e300]
+            - row [ref=e301]:
+              - cell "write.mode(\"overwrite\").parquet()" [ref=e302]
+              - cell "Action/Writer" [ref=e303]
+              - cell "Step 6 output" [ref=e304]
+              - cell "Saves cleaned DataFrame as Parquet for downstream use" [ref=e305]
+            - row [ref=e306]:
+              - cell "cache()" [ref=e307]
+              - cell "Optimization" [ref=e308]
+              - cell "O1" [ref=e309]
+              - cell "Materialises DataFrame in memory — reused by later queries" [ref=e310]
+            - row [ref=e311]:
+              - cell "spark.conf.set(shuffle.partitions,8)" [ref=e312]
+              - cell "Optimization" [ref=e313]
+              - cell "O3" [ref=e314]
+              - cell "Replaces default 200 with 2×cores — eliminates tiny-task overhead" [ref=e315]
+            - row [ref=e316]:
+              - cell "adaptive.enabled = True" [ref=e317]
+              - cell "Optimization" [ref=e318]
+              - cell "O4 (AQE)" [ref=e319]
+              - 'cell "Runtime re-optimization: merges small shuffle partitions automatically" [ref=e320]'
+            - row [ref=e321]:
+              - cell "explain()" [ref=e322]
+              - cell "Utility" [ref=e323]
+              - cell "Step 3" [ref=e324]
+              - cell "Prints physical plan — shows Exchange (shuffle) and FileScan steps" [ref=e325]
+            - row [ref=e326]:
+              - cell "getNumPartitions()" [ref=e327]
+              - cell "Utility" [ref=e328]
+              - cell "Step 3" [ref=e329]
+              - cell "Shows how many partitions the DataFrame is split into" [ref=e330]
+    - generic [ref=e331]:
+      - generic [ref=e332]:
+        - generic [ref=e333]: DAG
+        - generic [ref=e334]:
+          - heading "Pipeline Architecture — Directed Acyclic Graph" [level=2] [ref=e335]
+          - paragraph [ref=e336]: Full data flow with animated particles · hover nodes to inspect · Spark builds this graph internally
+      - generic [ref=e337]:
+        - generic [ref=e338]: Data Sources
+        - generic [ref=e340]: Spark Engine
+        - generic [ref=e342]: Outputs
+        - generic [ref=e344]: Data Flow
+      - img [ref=e347]:
+        - generic [ref=e366]:
+          - generic [ref=e367]:
+            - generic [ref=e370]: 🚕 Taxi Trips
+            - generic [ref=e371]: Parquet · 3M rows
+          - generic [ref=e372]:
+            - generic [ref=e375]: 🗺️ Taxi Zones
+            - generic [ref=e376]: CSV · 265 rows
+          - generic [ref=e377]:
+            - generic [ref=e380]: 📞 311 Requests
+            - generic [ref=e381]: CSV API · 250k rows
+          - generic [ref=e382]:
+            - generic [ref=e385]: 🌫️ Air Quality
+            - generic [ref=e386]: JSON API · 744 rows
+          - generic [ref=e387]:
+            - generic [ref=e390]: 🌦️ Weather
+            - generic [ref=e391]: JSON API · 744 rows
+          - generic [ref=e392]:
+            - generic [ref=e395]: 🚦 Live Traffic
+            - generic [ref=e396]: REST API · LIVE
+        - generic [ref=e397]:
+          - generic [ref=e399]: APACHE SPARK (PySpark · local[*] · 4 cores)
+          - generic [ref=e400]:
+            - generic [ref=e403]: 📥 Read
+            - generic [ref=e404]: DataFrames + Schemas
+          - generic [ref=e405]:
+            - generic [ref=e408]: 🔧 Clean
+            - generic [ref=e409]: Filter · Enrich · Dedup
+          - generic [ref=e410]:
+            - generic [ref=e413]: 📡 Distribute
+            - generic [ref=e414]: Partitions · Tasks
+          - generic [ref=e415]:
+            - generic [ref=e418]: 🔍 10 Queries
+            - generic [ref=e419]: groupBy · join · window
+          - generic [ref=e420]:
+            - generic [ref=e423]: ⚡ Optimize
+            - generic [ref=e424]: Cache · Broadcast · AQE
+          - generic [ref=e425]:
+            - generic [ref=e428]: 📊 Analyze
+            - generic [ref=e429]: Benchmark · Scaling
+        - generic [ref=e430]:
+          - generic [ref=e431]:
+            - generic [ref=e433]: 📁 Parquet
+            - generic [ref=e434]: trips_clean
+          - generic [ref=e435]:
+            - generic [ref=e437]: 📄 CSVs
+            - generic [ref=e438]: 10 results
+          - generic [ref=e439]:
+            - generic [ref=e441]: 📊 Charts
+            - generic [ref=e442]: PNG files
+          - generic [ref=e443]:
+            - generic [ref=e445]: 🔍 Spark UI
+            - generic [ref=e446]: DAG · Plans
+      - generic [ref=e464]:
+        - generic [ref=e465]:
+          - generic [ref=e466]: 🔹 Narrow Transformations
+          - paragraph [ref=e467]:
+            - text: Data stays in its own partition —
+            - strong [ref=e468]: no shuffle
+            - text: . Fast and cheap.
+          - generic [ref=e469]:
+            - generic [ref=e470]: filter()
+            - generic [ref=e471]: select()
+            - generic [ref=e472]: withColumn()
+            - generic [ref=e473]: fillna()
+        - generic [ref=e474]:
+          - generic [ref=e475]: 🔶 Wide Transformations (Shuffle)
+          - paragraph [ref=e476]:
+            - text: Rows move between partitions across cores. Expensive — triggers a
+            - strong [ref=e477]: shuffle
+            - text: .
+          - generic [ref=e478]:
+            - generic [ref=e479]: groupBy()
+            - generic [ref=e480]: join()
+            - generic [ref=e481]: orderBy()
+            - generic [ref=e482]: distinct()
+    - generic [ref=e483]:
+      - generic [ref=e484]:
+        - generic [ref=e485]: "01"
+        - generic [ref=e486]:
+          - heading "Step 1 — SparkSession Setup" [level=2] [ref=e487]
+          - paragraph [ref=e488]: Entry point to Spark · driver config · AQE · Spark UI · local[*] parallelism
+      - generic [ref=e489]:
+        - generic [ref=e490]:
+          - generic [ref=e491]:
+            - generic [ref=e492]:
+              - generic [ref=e493]: App Name
+              - generic [ref=e494]: SmartCityNYC
+            - generic [ref=e495]:
+              - generic [ref=e496]: Version
+              - generic [ref=e497]: 3.5.1
+            - generic [ref=e498]:
+              - generic [ref=e499]: Master
+              - generic [ref=e500]: local[*]
+            - generic [ref=e501]:
+              - generic [ref=e502]: CPU Cores
+              - generic [ref=e503]: 4 cores
+            - generic [ref=e504]:
+              - generic [ref=e505]: Driver Mem
+              - generic [ref=e506]: 4g
+            - generic [ref=e507]:
+              - generic [ref=e508]: Shuffle Parts
+              - generic [ref=e509]: "8"
+            - generic [ref=e510]:
+              - generic [ref=e511]: AQE
+              - generic [ref=e512]: ✅ ON
+            - generic [ref=e513]:
+              - generic [ref=e514]: Spark UI
+              - generic [ref=e515]: :4040
+          - generic [ref=e516]:
+            - generic [ref=e517]:
+              - generic [ref=e518]: Python (PySpark)
+              - generic [ref=e519]: Step 1 — SparkSession
+            - generic [ref=e520]: "from pyspark.sql import SparkSession spark = (SparkSession.builder .appName(\"SmartCityNYC\") .master(\"local[*]\") .config(\"spark.driver.memory\", \"4g\") .config(\"spark.sql.adaptive.enabled\", True) .config(\"spark.sql.adaptive.coalescePartitions.enabled\", True) .getOrCreate()) # Prove it works print(f\"Spark {spark.version}\") print(f\"Cores: {spark.sparkContext.defaultParallelism}\") print(f\"UI: http://localhost:4040\")"
+        - generic [ref=e521]:
+          - heading "How Spark Runs on This Machine" [level=3] [ref=e522]
+          - generic [ref=e523]:
+            - generic [ref=e525]:
+              - generic [ref=e526]: 🧑‍💻
+              - generic [ref=e527]: Driver
+              - generic [ref=e528]: Our Notebook (4GB RAM)
+              - generic [ref=e529]: • Builds query plan• Schedules tasks• Collects results• Hosts Spark UI :4040
+            - generic [ref=e530]: ↓ distributes tasks
+            - generic [ref=e531]:
+              - generic [ref=e532]:
+                - generic [ref=e533]: ⚙️
+                - generic [ref=e534]: Core 0
+                - generic [ref=e535]: Partition 0
+              - generic [ref=e536]:
+                - generic [ref=e537]: ⚙️
+                - generic [ref=e538]: Core 1
+                - generic [ref=e539]: Partition 1
+              - generic [ref=e540]:
+                - generic [ref=e541]: ⚙️
+                - generic [ref=e542]: Core 2
+                - generic [ref=e543]: Partition 2
+              - generic [ref=e544]:
+                - generic [ref=e545]: ⚙️
+                - generic [ref=e546]: Core 3
+                - generic [ref=e547]: Partition 3
+            - generic [ref=e548]: "local[*] = driver + executors on one machine. Same code on a cluster: change master to spark://..."
+    - generic [ref=e549]:
+      - generic [ref=e550]:
+        - generic [ref=e551]: ⚡
+        - generic [ref=e552]:
+          - heading "Interactive Data Fetch Simulator" [level=2] [ref=e553]
+          - paragraph [ref=e554]: Click any source to simulate a live data fetch → parse → Spark DataFrame creation pipeline
+      - generic [ref=e555]:
+        - generic [ref=e556]:
+          - generic [ref=e557]: Select Data Source
+          - generic [ref=e558]:
+            - button "🚕 NYC Yellow Taxi Trips Parquet" [ref=e559] [cursor=pointer]:
+              - generic [ref=e560]: 🚕
+              - generic [ref=e561]:
+                - generic [ref=e562]: NYC Yellow Taxi Trips
+                - generic [ref=e563]: Parquet
+            - button "🗺️ Taxi Zone Lookup CSV" [ref=e564] [cursor=pointer]:
+              - generic [ref=e565]: 🗺️
+              - generic [ref=e566]:
+                - generic [ref=e567]: Taxi Zone Lookup
+                - generic [ref=e568]: CSV
+            - button "📞 311 Service Requests CSV (API Pages)" [ref=e569] [cursor=pointer]:
+              - generic [ref=e570]: 📞
+              - generic [ref=e571]:
+                - generic [ref=e572]: 311 Service Requests
+                - generic [ref=e573]: CSV (API Pages)
+            - button "🌫️ Air Quality (Hourly) JSON (Nested)" [ref=e574] [cursor=pointer]:
+              - generic [ref=e575]: 🌫️
+              - generic [ref=e576]:
+                - generic [ref=e577]: Air Quality (Hourly)
+                - generic [ref=e578]: JSON (Nested)
+            - button "🌦️ Weather (Hourly) JSON (Nested)" [ref=e579] [cursor=pointer]:
+              - generic [ref=e580]: 🌦️
+              - generic [ref=e581]:
+                - generic [ref=e582]: Weather (Hourly)
+                - generic [ref=e583]: JSON (Nested)
+            - button "🚦 Live Traffic Speeds JSON (Real-time)" [ref=e584] [cursor=pointer]:
+              - generic [ref=e585]: 🚦
+              - generic [ref=e586]:
+                - generic [ref=e587]: Live Traffic Speeds
+                - generic [ref=e588]: JSON (Real-time)
+        - generic [ref=e589]:
+          - generic [ref=e590]:
+            - generic [ref=e595]: PySpark Console — SmartCityNYC
+            - generic [ref=e596]: IDLE
+          - generic [ref=e597]:
+            - generic [ref=e598]: ▶ SparkSession active — waiting for data source selection...
+            - generic [ref=e599]: ▶ Select a source on the left to simulate a live fetch
+          - generic [ref=e600]:
+            - button "▶ Run Fetch" [disabled] [ref=e601] [cursor=pointer]
+            - button "⌫ Clear" [ref=e602] [cursor=pointer]
+    - generic [ref=e604]:
+      - generic [ref=e605]:
+        - generic [ref=e606]: "02"
+        - generic [ref=e607]:
+          - heading "Step 2 — Data Ingestion" [level=2] [ref=e608]
+          - paragraph [ref=e609]: 6 sources · Parquet · CSV with explicit schemas · Nested JSON flattened · Live REST API
+      - generic [ref=e610]:
+        - generic [ref=e611] [cursor=pointer]:
+          - generic [ref=e612]:
+            - generic [ref=e613]: 🚕
+            - generic [ref=e614]:
+              - generic [ref=e615]: NYC Yellow Taxi Trips
+              - generic [ref=e616]: Jan 2024 · TLC Open Data
+            - generic [ref=e617]: Parquet
+          - generic [ref=e618]:
+            - generic [ref=e619]:
+              - generic [ref=e620]: 2.96M
+              - text: Rows
+            - generic [ref=e621]:
+              - generic [ref=e622]: "19"
+              - text: Columns
+            - generic [ref=e623]:
+              - generic [ref=e624]: 50MB
+              - text: Size
+          - generic [ref=e625]:
+            - generic [ref=e626]: ●
+            - text: File Download
+        - generic [ref=e627] [cursor=pointer]:
+          - generic [ref=e628]:
+            - generic [ref=e629]: 🗺️
+            - generic [ref=e630]:
+              - generic [ref=e631]: Taxi Zone Lookup
+              - generic [ref=e632]: 265 zones · TLC
+            - generic [ref=e633]: CSV
+          - generic [ref=e634]:
+            - generic [ref=e635]:
+              - generic [ref=e636]: "265"
+              - text: Rows
+            - generic [ref=e637]:
+              - generic [ref=e638]: "4"
+              - text: Columns
+            - generic [ref=e639]:
+              - generic [ref=e640]: 20KB
+              - text: Size
+          - generic [ref=e641]:
+            - generic [ref=e642]: ●
+            - text: File Download
+        - generic [ref=e643] [cursor=pointer]:
+          - generic [ref=e644]:
+            - generic [ref=e645]: 📞
+            - generic [ref=e646]:
+              - generic [ref=e647]: 311 Service Requests
+              - generic [ref=e648]: NYC Open Data API · ~250k rows
+            - generic [ref=e649]: CSV
+          - generic [ref=e650]:
+            - generic [ref=e651]:
+              - generic [ref=e652]: 249,832
+              - text: Rows
+            - generic [ref=e653]:
+              - generic [ref=e654]: "12"
+              - text: Columns
+            - generic [ref=e655]:
+              - generic [ref=e656]: 78MB
+              - text: Size
+          - generic [ref=e657]:
+            - generic [ref=e658]: ●
+            - text: REST API (Socrata)
+        - generic [ref=e659] [cursor=pointer]:
+          - generic [ref=e660]:
+            - generic [ref=e661]: 🌫️
+            - generic [ref=e662]:
+              - generic [ref=e663]: Air Quality (Hourly)
+              - generic [ref=e664]: Open-Meteo API · 744 rows
+            - generic [ref=e665]: JSON
+          - generic [ref=e666]:
+            - generic [ref=e667]:
+              - generic [ref=e668]: "744"
+              - text: Rows
+            - generic [ref=e669]:
+              - generic [ref=e670]: "5"
+              - text: Columns
+            - generic [ref=e671]:
+              - generic [ref=e672]: 300KB
+              - text: Size
+          - generic [ref=e673]:
+            - generic [ref=e674]: ●
+            - text: REST API (Open-Meteo)
+        - generic [ref=e675] [cursor=pointer]:
+          - generic [ref=e676]:
+            - generic [ref=e677]: 🌦️
+            - generic [ref=e678]:
+              - generic [ref=e679]: Weather (Hourly)
+              - generic [ref=e680]: Open-Meteo API · 744 rows
+            - generic [ref=e681]: JSON
+          - generic [ref=e682]:
+            - generic [ref=e683]:
+              - generic [ref=e684]: "744"
+              - text: Rows
+            - generic [ref=e685]:
+              - generic [ref=e686]: "4"
+              - text: Columns
+            - generic [ref=e687]:
+              - generic [ref=e688]: 200KB
+              - text: Size
+          - generic [ref=e689]:
+            - generic [ref=e690]: ●
+            - text: REST API (Open-Meteo)
+        - generic [ref=e691] [cursor=pointer]:
+          - generic [ref=e692]:
+            - generic [ref=e693]: 🚦
+            - generic [ref=e694]:
+              - generic [ref=e695]: Live Traffic Speeds
+              - generic [ref=e696]: NYC DOT API · ~150 sensors
+            - generic [ref=e697]: JSON
+          - generic [ref=e698]:
+            - generic [ref=e699]:
+              - generic [ref=e700]: "148"
+              - text: Rows
+            - generic [ref=e701]:
+              - generic [ref=e702]: "6"
+              - text: Columns
+            - generic [ref=e703]:
+              - generic [ref=e704]: 50KB
+              - text: Size
+          - generic [ref=e705]:
+            - generic [ref=e706]: ●
+            - text: REST API (NYC DOT) · LIVE
+      - generic [ref=e707]:
+        - generic [ref=e708]:
+          - generic [ref=e709]: 🚕
+          - heading "NYC Yellow Taxi Trips — Schema" [level=4] [ref=e710]
+          - generic [ref=e711]: printSchema()
+        - table [ref=e713]:
+          - rowgroup [ref=e714]:
+            - row [ref=e715]:
+              - columnheader "#" [ref=e716]
+              - columnheader "Column Name" [ref=e717]
+              - columnheader "Type" [ref=e718]
+              - columnheader "Nullable" [ref=e719]
+          - rowgroup [ref=e720]:
+            - row [ref=e721]:
+              - cell "0" [ref=e722]
+              - cell "VendorID" [ref=e723]
+              - cell "integer" [ref=e724]
+              - cell "✓ true" [ref=e726]
+            - row [ref=e727]:
+              - cell "1" [ref=e728]
+              - cell "tpep_pickup_datetime" [ref=e729]
+              - cell "timestamp" [ref=e730]
+              - cell "✓ true" [ref=e732]
+            - row [ref=e733]:
+              - cell "2" [ref=e734]
+              - cell "tpep_dropoff_datetime" [ref=e735]
+              - cell "timestamp" [ref=e736]
+              - cell "✓ true" [ref=e738]
+            - row [ref=e739]:
+              - cell "3" [ref=e740]
+              - cell "passenger_count" [ref=e741]
+              - cell "double" [ref=e742]
+              - cell "✓ true" [ref=e744]
+            - row [ref=e745]:
+              - cell "4" [ref=e746]
+              - cell "trip_distance" [ref=e747]
+              - cell "double" [ref=e748]
+              - cell "✓ true" [ref=e750]
+            - row [ref=e751]:
+              - cell "5" [ref=e752]
+              - cell "PULocationID" [ref=e753]
+              - cell "integer" [ref=e754]
+              - cell "✓ true" [ref=e756]
+            - row [ref=e757]:
+              - cell "6" [ref=e758]
+              - cell "DOLocationID" [ref=e759]
+              - cell "integer" [ref=e760]
+              - cell "✓ true" [ref=e762]
+            - row [ref=e763]:
+              - cell "7" [ref=e764]
+              - cell "fare_amount" [ref=e765]
+              - cell "double" [ref=e766]
+              - cell "✓ true" [ref=e768]
+            - row [ref=e769]:
+              - cell "8" [ref=e770]
+              - cell "tip_amount" [ref=e771]
+              - cell "double" [ref=e772]
+              - cell "✓ true" [ref=e774]
+            - row [ref=e775]:
+              - cell "9" [ref=e776]
+              - cell "total_amount" [ref=e777]
+              - cell "double" [ref=e778]
+              - cell "✓ true" [ref=e780]
+            - row [ref=e781]:
+              - cell "10" [ref=e782]
+              - cell "payment_type" [ref=e783]
+              - cell "integer" [ref=e784]
+              - cell "✓ true" [ref=e786]
+      - generic [ref=e787]:
+        - generic [ref=e788]:
+          - generic [ref=e789]: 📋
+          - heading "Sample Data — NYC Yellow Taxi Trips" [level=4] [ref=e790]
+          - generic [ref=e791]: df.show(3)
+        - table [ref=e793]:
+          - rowgroup [ref=e794]:
+            - row [ref=e795]:
+              - columnheader "VendorID" [ref=e796]
+              - columnheader "tpep_pickup_datetime" [ref=e797]
+              - columnheader "tpep_dropoff_datetime" [ref=e798]
+              - columnheader "passenger_count" [ref=e799]
+              - columnheader "trip_distance" [ref=e800]
+              - columnheader "PULocationID" [ref=e801]
+              - columnheader "DOLocationID" [ref=e802]
+              - columnheader "fare_amount" [ref=e803]
+              - columnheader "tip_amount" [ref=e804]
+              - columnheader "total_amount" [ref=e805]
+              - columnheader "payment_type" [ref=e806]
+          - rowgroup [ref=e807]:
+            - row [ref=e808]:
+              - cell "1" [ref=e809]
+              - cell "2024-01-15 08:23:00" [ref=e810]
+              - cell "2024-01-15 08:41:00" [ref=e811]
+              - cell "1" [ref=e812]
+              - cell "3.2" [ref=e813]
+              - cell "161" [ref=e814]
+              - cell "236" [ref=e815]
+              - cell "14.5" [ref=e816]
+              - cell "3.05" [ref=e817]
+              - cell "20.1" [ref=e818]
+              - cell "1" [ref=e819]
+            - row [ref=e820]:
+              - cell "2" [ref=e821]
+              - cell "2024-01-15 09:01:00" [ref=e822]
+              - cell "2024-01-15 09:18:00" [ref=e823]
+              - cell "2" [ref=e824]
+              - cell "1.8" [ref=e825]
+              - cell "237" [ref=e826]
+              - cell "142" [ref=e827]
+              - cell "12" [ref=e828]
+              - cell "2.4" [ref=e829]
+              - cell "17.1" [ref=e830]
+              - cell "1" [ref=e831]
+            - row [ref=e832]:
+              - cell "1" [ref=e833]
+              - cell "2024-01-15 09:45:00" [ref=e834]
+              - cell "2024-01-15 10:02:00" [ref=e835]
+              - cell "1" [ref=e836]
+              - cell "5.1" [ref=e837]
+              - cell "132" [ref=e838]
+              - cell "48" [ref=e839]
+              - cell "22" [ref=e840]
+              - cell "4.6" [ref=e841]
+              - cell "29.4" [ref=e842]
+              - cell "2" [ref=e843]
+        - generic [ref=e844]:
+          - text: Showing 3 of
+          - strong [ref=e845]: 2.96M
+          - text: rows · 19 columns
+      - generic [ref=e846]:
+        - generic [ref=e847]:
+          - generic [ref=e848]: 🔄
+          - generic [ref=e849]:
+            - heading "Flattening Nested JSON — Open-Meteo API" [level=3] [ref=e850]
+            - paragraph [ref=e851]: arrays_zip + explode turns parallel lists into rows
+          - generic [ref=e852]: Spark used here
+        - generic [ref=e853]:
+          - generic [ref=e854]:
+            - generic [ref=e855]: Raw JSON Response
+            - generic [ref=e856]: "{ \"hourly\": { \"time\": [ \"2024-01-01T00:00\", \"2024-01-01T01:00\", ... ], \"nitrogen_dioxide\": [24.8, 20.8, ...], \"pm2_5\": [ 8.2, 7.9, ...], \"carbon_monoxide\": [312, 298, ...] } }"
+          - generic [ref=e857]:
+            - generic [ref=e858]: arrays_zip+ explode
+            - generic [ref=e859]: →
+          - generic [ref=e860]:
+            - generic [ref=e861]: Flat Spark DataFrame (744 rows)
+            - generic [ref=e862]: +-------------------+------+--------+------+ | hour_ts |pm2_5 | no2 | co | +-------------------+------+--------+------+ | 2024-01-01 00:00 | 8.2 | 24.8 | 312 | | 2024-01-01 01:00 | 7.9 | 20.8 | 298 | | 2024-01-01 02:00 | 7.4 | 18.2 | 280 | | ... | ... | ... | ... | +-------------------+------+--------+------+ 744 rows × 4 columns
+        - generic [ref=e863]:
+          - generic [ref=e864]:
+            - generic [ref=e865]: PySpark
+            - generic [ref=e866]: Flatten nested JSON
+          - generic [ref=e867]: "# Read raw JSON raw = spark.read.option(\"multiLine\", True).json(\"air_quality.json\") # Zip parallel arrays into struct array, then explode to rows from pyspark.sql.functions import arrays_zip, explode, col, to_timestamp air_df = (raw .select(arrays_zip( col(\"hourly.time\"), col(\"hourly.pm2_5\"), col(\"hourly.nitrogen_dioxide\"), col(\"hourly.carbon_monoxide\") ).alias(\"zipped\")) .select(explode(\"zipped\").alias(\"row\")) .select( to_timestamp(col(\"row.time\")).alias(\"hour_ts\"), col(\"row.pm2_5\").cast(\"double\"), col(\"row.nitrogen_dioxide\").cast(\"double\"), col(\"row.carbon_monoxide\").cast(\"double\") )) air_df.show(3) # ACTION — triggers Spark job"
+    - generic [ref=e868]:
+      - generic [ref=e869]:
+        - generic [ref=e870]: "03"
+        - generic [ref=e871]:
+          - heading "Step 3 — Distributed Processing" [level=2] [ref=e872]
+          - paragraph [ref=e873]: Partitions · Tasks · Stages · Jobs — Spark's core parallelism mechanism
+      - generic [ref=e874]:
+        - generic [ref=e875]:
+          - heading "📦 4 Partitions — 4 Cores" [level=3] [ref=e876]
+          - paragraph [ref=e877]: 2,964,624 taxi rows split equally. Each core owns one partition.
+          - generic [ref=e878]:
+            - generic [ref=e879]:
+              - generic [ref=e880]: Partition 0
+              - generic [ref=e881]: "0"
+              - generic [ref=e882]: rows
+              - generic [ref=e884]: 25%
+            - generic [ref=e885]:
+              - generic [ref=e886]: Partition 1
+              - generic [ref=e887]: "0"
+              - generic [ref=e888]: rows
+              - generic [ref=e890]: 25%
+            - generic [ref=e891]:
+              - generic [ref=e892]: Partition 2
+              - generic [ref=e893]: "0"
+              - generic [ref=e894]: rows
+              - generic [ref=e896]: 25%
+            - generic [ref=e897]:
+              - generic [ref=e898]: Partition 3
+              - generic [ref=e899]: "0"
+              - generic [ref=e900]: rows
+              - generic [ref=e902]: 25%
+          - generic [ref=e903]:
+            - generic [ref=e904]: Core 0
+            - generic [ref=e906]: Core 1
+            - generic [ref=e908]: Core 2
+            - generic [ref=e910]: Core 3
+        - generic [ref=e912]:
+          - generic [ref=e913]:
+            - heading "⚡ How a GroupBy Job Runs" [level=3] [ref=e914]
+            - generic [ref=e915]:
+              - generic [ref=e916]:
+                - generic [ref=e917]: Stage 1
+                - generic [ref=e918]:
+                  - 'generic "Task 0: FileScan" [ref=e919]': "0"
+                  - 'generic "Task 1: FileScan" [ref=e920]': "1"
+                  - 'generic "Task 2: FileScan" [ref=e921]': "2"
+                  - 'generic "Task 3: FileScan" [ref=e922]': "3"
+                  - 'generic "Task 0: Filter" [ref=e923]': "0"
+                  - 'generic "Task 1: Filter" [ref=e924]': "1"
+                  - 'generic "Task 2: Filter" [ref=e925]': "2"
+                  - 'generic "Task 3: Filter" [ref=e926]': "3"
+                  - 'generic "Task 0: partial_agg" [ref=e927]': "0"
+                  - 'generic "Task 1: partial_agg" [ref=e928]': "1"
+                  - 'generic "Task 2: partial_agg" [ref=e929]': "2"
+                  - 'generic "Task 3: partial_agg" [ref=e930]': "3"
+                - generic [ref=e931]: FileScan → Filter → partial HashAgg (all narrow — no shuffle)
+              - generic [ref=e932]: ⇅ SHUFFLE (Exchange) — rows regrouped by pickup_hour across partitions
+              - generic [ref=e933]:
+                - generic [ref=e934]: Stage 2
+                - generic [ref=e935]:
+                  - 'generic "Task 0: HashAgg" [ref=e936]': "0"
+                  - 'generic "Task 1: HashAgg" [ref=e937]': "1"
+                  - 'generic "Task 2: HashAgg" [ref=e938]': "2"
+                  - 'generic "Task 3: HashAgg" [ref=e939]': "3"
+                  - 'generic "Task 4: HashAgg" [ref=e940]': "4"
+                  - 'generic "Task 5: HashAgg" [ref=e941]': "5"
+                  - 'generic "Task 6: HashAgg" [ref=e942]': "6"
+                  - 'generic "Task 7: HashAgg" [ref=e943]': "7"
+                  - 'generic "Task 0: Sort" [ref=e944]': "0"
+                  - 'generic "Task 1: Sort" [ref=e945]': "1"
+                  - 'generic "Task 2: Sort" [ref=e946]': "2"
+                  - 'generic "Task 3: Sort" [ref=e947]': "3"
+                  - 'generic "Task 4: Sort" [ref=e948]': "4"
+                  - 'generic "Task 5: Sort" [ref=e949]': "5"
+                  - 'generic "Task 6: Sort" [ref=e950]': "6"
+                  - 'generic "Task 7: Sort" [ref=e951]': "7"
+                - generic [ref=e952]: final HashAgg → Sort → result (8 shuffle partitions after AQE)
+          - generic [ref=e953]:
+            - heading "🔎 Physical Plan (Q1 explain)" [level=3] [ref=e954]
+            - generic [ref=e955]: == Physical Plan == Sort [pickup_hour ASC], true +- Exchange rangepartitioning(pickup_hour, 8) +- HashAggregate(keys=[pickup_hour]) +- Exchange hashpartitioning(pickup_hour, 8) ← SHUFFLE +- HashAggregate(partial_count, partial_avg) +- Project [fare_amount, hour(tpep_pickup_datetime)] +- Filter (fare_amount > 0 AND distance BETWEEN 0 AND 100) +- FileScan parquet [2 cols] ← predicate pushdown
+            - generic [ref=e956]:
+              - generic [ref=e957]: FileScan
+              - generic [ref=e958]: partial_agg
+              - generic [ref=e959]: Exchange = shuffle
+              - generic [ref=e960]: HashAggregate
+    - generic [ref=e961]:
+      - generic [ref=e962]:
+        - generic [ref=e963]: "04"
+        - generic [ref=e964]:
+          - heading "Step 4 — Cleaning & Transformation" [level=2] [ref=e965]
+          - paragraph [ref=e966]: filter · withColumn · dropDuplicates · try_cast · fillna · create_map · window functions
+      - generic [ref=e967]:
+        - generic [ref=e968]:
+          - generic [ref=e969]:
+            - generic [ref=e970]: 🚕
+            - generic [ref=e971]:
+              - heading "Taxi Trips — Data Cleaning (6 Quality Rules)" [level=3] [ref=e972]
+              - paragraph [ref=e973]: Applied in one pass using conditional sums — no repeated scans
+            - generic [ref=e974]: Transformations → Action
+          - generic [ref=e975]:
+            - generic [ref=e976]:
+              - generic [ref=e977]: RAW DataFrame
+              - generic [ref=e978]: "0"
+              - generic [ref=e979]: rows ingested
+              - generic [ref=e980]:
+                - generic [ref=e981]: trips_raw
+                - generic [ref=e982]: 19 cols
+            - generic [ref=e983]: filter()
+            - generic [ref=e986]:
+              - generic [ref=e987]: CLEAN DataFrame
+              - generic [ref=e988]: "0"
+              - generic [ref=e989]: rows remaining
+              - generic [ref=e990]: ✓ 95.4% retained ↓ 136,259 removed
+              - generic [ref=e991]:
+                - generic [ref=e992]: trips_clean
+                - generic [ref=e993]: 25 cols
+          - heading "Quality Rules" [level=4] [ref=e994]
+          - list [ref=e995]:
+            - listitem [ref=e996]:
+              - generic [ref=e997]: ✓ Pickup inside Jan 2024
+              - generic [ref=e998]: 0.001%
+              - generic [ref=e999]: −18
+            - listitem [ref=e1000]:
+              - generic [ref=e1001]: ✓ Duration 1–180 min
+              - generic [ref=e1002]: 0.16%
+              - generic [ref=e1003]: −4,821
+            - listitem [ref=e1004]:
+              - generic [ref=e1005]: ✓ Distance 0–100 miles
+              - generic [ref=e1006]: 2.07%
+              - generic [ref=e1007]: −61,240
+            - listitem [ref=e1008]:
+              - generic [ref=e1009]: ✓ Fare & total > 0
+              - generic [ref=e1010]: 0.43%
+              - generic [ref=e1011]: −12,834
+            - listitem [ref=e1012]:
+              - generic [ref=e1013]: ✓ Passengers 1–6
+              - generic [ref=e1014]: 0.96%
+              - generic [ref=e1015]: −28,442
+            - listitem [ref=e1016]:
+              - generic [ref=e1017]: ✓ Speed ≤ 80 mph
+              - generic [ref=e1018]: 0.98%
+              - generic [ref=e1019]: −28,904
+          - generic [ref=e1020]:
+            - generic [ref=e1021]: + ENRICHED COLUMNS (withColumn)
+            - generic [ref=e1022]:
+              - generic [ref=e1023]: pickup_hour
+              - generic [ref=e1024]: pickup_date
+              - generic [ref=e1025]: day_of_week
+              - generic [ref=e1026]: is_weekend
+              - generic [ref=e1027]: tip_pct
+              - generic [ref=e1028]: payment_method
+        - generic [ref=e1029]:
+          - heading "⚡ Lazy Evaluation — Proven with Timing" [level=4] [ref=e1030]
+          - paragraph [ref=e1031]: Defining the cleaning pipeline is nearly instant. Spark only runs when you call an action.
+          - generic [ref=e1032]:
+            - generic [ref=e1033]:
+              - generic [ref=e1034]: 0.04s
+              - generic [ref=e1036]: Define cleaning chain (build DAG plan)
+            - generic [ref=e1037]: →
+            - generic [ref=e1038]:
+              - generic [ref=e1039]: 0.18s
+              - generic [ref=e1041]: Add withColumn enrichments
+            - generic [ref=e1042]: →
+            - generic [ref=e1043]:
+              - generic [ref=e1044]: 1.24s
+              - generic [ref=e1046]: count() — Spark RUNS the whole plan here
+            - generic [ref=e1047]: →
+            - generic [ref=e1048]:
+              - generic [ref=e1049]: 2,828,365
+              - generic [ref=e1051]: Result returned to driver
+        - generic [ref=e1052]:
+          - generic [ref=e1053]:
+            - generic [ref=e1054]: 📞
+            - generic [ref=e1055]:
+              - heading "311 Complaints — Cleaning" [level=3] [ref=e1056]
+              - paragraph [ref=e1057]: dropDuplicates · try_cast · borough normalization · resolution_hours
+          - list [ref=e1058]:
+            - listitem [ref=e1059]:
+              - generic [ref=e1060]: ✓ dropDuplicates(unique_key)
+              - generic [ref=e1061]: 0.84%
+              - generic [ref=e1062]: −2,103
+            - listitem [ref=e1063]:
+              - generic [ref=e1064]: ✓ Valid date parse (try_cast)
+              - generic [ref=e1065]: 0.16%
+              - generic [ref=e1066]: −412
+            - listitem [ref=e1067]:
+              - generic [ref=e1068]: ✓ Borough normalization
+              - generic [ref=e1069]: 2.33%
+              - generic [ref=e1070]: −5,810
+          - generic [ref=e1071]:
+            - generic [ref=e1072]: resolution_hours
+            - generic [ref=e1073]: borough_clean
+    - generic [ref=e1074]:
+      - generic [ref=e1075]:
+        - generic [ref=e1076]: "05"
+        - generic [ref=e1077]:
+          - heading "Step 5 — 10 Analytical Queries" [level=2] [ref=e1078]
+          - paragraph [ref=e1079]: Click ▼ on any card to expand the live chart · groupBy · join · window · pivot · corr · Spark SQL
+      - generic [ref=e1080]:
+        - generic [ref=e1081]: 🚕 Q1–Q3 Mobility
+        - generic [ref=e1082]: 🏛️ Q4–Q6 Citizen Services
+        - generic [ref=e1083]: 🌫️ Q7–Q8 Environment
+        - generic [ref=e1084]: 🚦 Q9 Live Traffic
+        - generic [ref=e1085]: 🏙️ Q10 Borough Scorecard
+      - generic [ref=e1086]:
+        - generic [ref=e1087]:
+          - generic [ref=e1088]:
+            - generic [ref=e1089]: Q1
+            - generic [ref=e1090]: 🚕 Mobility
+            - generic [ref=e1091]: When does the city move?
+            - generic [ref=e1092]: Trips, avg fare & distance per hour
+            - generic [ref=e1093]:
+              - generic [ref=e1094]: groupBy
+              - generic [ref=e1095]: agg(count, avg)
+              - generic [ref=e1096]: orderBy
+              - generic [ref=e1097]: Spark SQL
+              - generic [ref=e1098]: ⚡ WIDE/Shuffle
+          - generic [ref=e1099]:
+            - generic [ref=e1100]:
+              - generic [ref=e1101]: 1.84s
+              - generic [ref=e1102]: execution time
+            - button "▼" [ref=e1103] [cursor=pointer]
+        - generic [ref=e1104]:
+          - generic [ref=e1105]:
+            - generic [ref=e1106]: Q2
+            - generic [ref=e1107]: 🚕 Mobility
+            - generic [ref=e1108]: Busiest Mobility Hubs
+            - generic [ref=e1109]: Top 10 zones by pickup count
+            - generic [ref=e1110]:
+              - generic [ref=e1111]: join (broadcast)
+              - generic [ref=e1112]: groupBy(Zone, Borough)
+              - generic [ref=e1113]: orderBy(desc)
+              - generic [ref=e1114]: limit(10)
+              - generic [ref=e1115]: ⚡ WIDE/Shuffle
+          - generic [ref=e1116]:
+            - generic [ref=e1117]:
+              - generic [ref=e1118]: 430ms
+              - generic [ref=e1119]: execution time
+            - button "▼" [ref=e1120] [cursor=pointer]
+        - generic [ref=e1121]:
+          - generic [ref=e1122]:
+            - generic [ref=e1123]: Q3
+            - generic [ref=e1124]: 🚕 Mobility
+            - generic [ref=e1125]: Weekly Heatmap
+            - generic [ref=e1126]: Trips by day × hour (pivot)
+            - generic [ref=e1127]:
+              - generic [ref=e1128]: groupBy(day_of_week)
+              - generic [ref=e1129]: pivot(pickup_hour)
+              - generic [ref=e1130]: count()
+              - generic [ref=e1131]: ⚡ WIDE/Shuffle
+          - generic [ref=e1132]:
+            - generic [ref=e1133]:
+              - generic [ref=e1134]: 2.12s
+              - generic [ref=e1135]: execution time
+            - button "▼" [ref=e1136] [cursor=pointer]
+        - generic [ref=e1137]:
+          - generic [ref=e1138]:
+            - generic [ref=e1139]: Q4
+            - generic [ref=e1140]: 🏛️ Citizen Services
+            - generic [ref=e1141]: Top Complaint Types
+            - generic [ref=e1142]: By count with % of total
+            - generic [ref=e1143]:
+              - generic [ref=e1144]: groupBy(complaint_type)
+              - generic [ref=e1145]: count()
+              - generic [ref=e1146]: Window.sum().over()
+              - generic [ref=e1147]: ⚡ WIDE/Shuffle
+          - generic [ref=e1148]:
+            - generic [ref=e1149]:
+              - generic [ref=e1150]: 980ms
+              - generic [ref=e1151]: execution time
+            - button "▼" [ref=e1152] [cursor=pointer]
+        - generic [ref=e1153]:
+          - generic [ref=e1154]:
+            - generic [ref=e1155]: Q5
+            - generic [ref=e1156]: 🏛️ Citizen Services
+            - generic [ref=e1157]: Agency Response Speed
+            - generic [ref=e1158]: Median resolution hours per agency
+            - generic [ref=e1159]:
+              - generic [ref=e1160]: groupBy(agency)
+              - generic [ref=e1161]: percentile_approx(resolution_hours, 0.5)
+              - generic [ref=e1162]: avg()
+              - generic [ref=e1163]: ⚡ WIDE/Shuffle
+          - generic [ref=e1164]:
+            - generic [ref=e1165]:
+              - generic [ref=e1166]: 1.24s
+              - generic [ref=e1167]: execution time
+            - button "▼" [ref=e1168] [cursor=pointer]
+        - generic [ref=e1169]:
+          - generic [ref=e1170]:
+            - generic [ref=e1171]: Q6
+            - generic [ref=e1172]: 🏛️ Citizen Services
+            - generic [ref=e1173]: Top 3 Complaints per Borough
+            - generic [ref=e1174]: dense_rank() window function
+            - generic [ref=e1175]:
+              - generic [ref=e1176]: groupBy(borough, complaint_type)
+              - generic [ref=e1177]: Window dense_rank()
+              - generic [ref=e1178]: filter rank ≤ 3
+              - generic [ref=e1179]: ⚡ WIDE/Shuffle
+          - generic [ref=e1180]:
+            - generic [ref=e1181]:
+              - generic [ref=e1182]: 1.58s
+              - generic [ref=e1183]: execution time
+            - button "▼" [ref=e1184] [cursor=pointer]
+        - generic [ref=e1185]:
+          - generic [ref=e1186]:
+            - generic [ref=e1187]: Q7
+            - generic [ref=e1188]: 🌫️ Environment
+            - generic [ref=e1189]: Traffic vs Air Pollution
+            - generic [ref=e1190]: Trips corr. with NO₂, PM2.5, CO
+            - generic [ref=e1191]:
+              - generic [ref=e1192]: date_trunc(hour)
+              - generic [ref=e1193]: join (by hour)
+              - generic [ref=e1194]: na.drop()
+              - generic [ref=e1195]: corr()
+              - generic [ref=e1196]: ⚡ WIDE/Shuffle
+          - generic [ref=e1197]:
+            - generic [ref=e1198]:
+              - generic [ref=e1199]: 2.84s
+              - generic [ref=e1200]: execution time
+            - button "▼" [ref=e1201] [cursor=pointer]
+        - generic [ref=e1202]:
+          - generic [ref=e1203]:
+            - generic [ref=e1204]: Q8
+            - generic [ref=e1205]: 🌦️ Environment
+            - generic [ref=e1206]: Cold Days → Heating Complaints
+            - generic [ref=e1207]: Temperature vs HEAT/HOT WATER count
+            - generic [ref=e1208]:
+              - generic [ref=e1209]: join (by date)
+              - generic [ref=e1210]: corr(temp, complaint_count)
+              - generic [ref=e1211]: ⚡ WIDE/Shuffle
+          - generic [ref=e1212]:
+            - generic [ref=e1213]:
+              - generic [ref=e1214]: 1.92s
+              - generic [ref=e1215]: execution time
+            - button "▼" [ref=e1216] [cursor=pointer]
+        - generic [ref=e1217]:
+          - generic [ref=e1218]:
+            - generic [ref=e1219]: Q9
+            - generic [ref=e1220]: 🚦 Live Traffic
+            - generic [ref=e1221]: Live Traffic Snapshot
+            - generic [ref=e1222]: Current speeds by borough
+            - generic [ref=e1223]:
+              - generic [ref=e1224]: groupBy(borough).agg(count, avg, min)
+              - generic [ref=e1225]: orderBy(speed)
+              - generic [ref=e1226]: 🔹 NARROW
+          - generic [ref=e1227]:
+            - generic [ref=e1228]:
+              - generic [ref=e1229]: 280ms
+              - generic [ref=e1230]: execution time
+            - button "▼" [ref=e1231] [cursor=pointer]
+        - generic [ref=e1232]:
+          - generic [ref=e1233]:
+            - generic [ref=e1234]: Q10
+            - generic [ref=e1235]: 🏙️ Integrated View
+            - generic [ref=e1236]: Borough Scorecard
+            - generic [ref=e1237]: Mobility + Services + Traffic combined
+            - generic [ref=e1238]:
+              - generic [ref=e1239]: spark.createDataFrame
+              - generic [ref=e1240]: 4× left join
+              - generic [ref=e1241]: broadcast join
+              - generic [ref=e1242]: per-1000 rates
+              - generic [ref=e1243]: ⚡ WIDE/Shuffle
+          - generic [ref=e1244]:
+            - generic [ref=e1245]:
+              - generic [ref=e1246]: 3.24s
+              - generic [ref=e1247]: execution time
+            - button "▼" [ref=e1248] [cursor=pointer]
+    - generic [ref=e1249]:
+      - generic [ref=e1250]:
+        - generic [ref=e1251]: "06"
+        - generic [ref=e1252]:
+          - heading "Step 6 — Performance Optimizations" [level=2] [ref=e1253]
+          - paragraph [ref=e1254]: 5 optimizations · baseline vs optimized · median of 3 runs · noop writer for fairness
+      - generic [ref=e1255]:
+        - generic [ref=e1256]:
+          - generic [ref=e1257]: 📐
+          - generic [ref=e1258]: Fair Measurement
+          - generic [ref=e1259]: noop writer excludes I/O time · median of 3 runs eliminates outliers
+        - generic [ref=e1260]:
+          - generic [ref=e1261]: 📸
+          - generic [ref=e1262]: Spark UI Proof
+          - generic [ref=e1263]: Storage / SQL / Stages tabs confirm each optimization visually
+        - generic [ref=e1264]:
+          - generic [ref=e1265]: 🏆
+          - generic [ref=e1266]: "Best: 8.4× Speedup"
+          - generic [ref=e1267]: Parquet vs CSV — columnar + predicate pushdown wins by far
+      - generic [ref=e1268]:
+        - generic [ref=e1269]:
+          - generic [ref=e1270]:
+            - generic [ref=e1271]: 💾
+            - generic [ref=e1272]:
+              - generic [ref=e1273]: O1
+              - generic [ref=e1274]: Caching
+          - code [ref=e1275]: trips.cache()
+          - paragraph [ref=e1276]:
+            - strong [ref=e1277]: "Problem:"
+            - text: Every query re-reads Parquet & re-runs cleaning (lazy evaluation replay)
+            - strong [ref=e1278]: "Fix:"
+            - text: cache() — materialises cleaned DF in memory
+          - generic [ref=e1279]:
+            - generic [ref=e1280]:
+              - generic [ref=e1281]: Baseline
+              - generic [ref=e1283]: 2.30s
+            - generic [ref=e1284]:
+              - generic [ref=e1285]: Optimized
+              - generic [ref=e1287]: 900ms
+          - generic [ref=e1288]:
+            - text: 2.5× faster
+            - generic [ref=e1289]: speedup
+          - generic [ref=e1290]:
+            - text: "📸 Spark UI:"
+            - strong [ref=e1291]: Storage tab shows cached RDD
+        - generic [ref=e1292]:
+          - generic [ref=e1293]:
+            - generic [ref=e1294]: 📡
+            - generic [ref=e1295]:
+              - generic [ref=e1296]: O2
+              - generic [ref=e1297]: Broadcast Join
+          - code [ref=e1298]: F.broadcast(zones_df)
+          - paragraph [ref=e1299]:
+            - strong [ref=e1300]: "Problem:"
+            - text: Sort-merge join shuffles 3M trip rows across cores
+            - strong [ref=e1301]: "Fix:"
+            - text: Copy 265-row zones table to every task — no trip shuffle
+          - generic [ref=e1302]:
+            - generic [ref=e1303]:
+              - generic [ref=e1304]: Baseline
+              - generic [ref=e1306]: 950ms
+            - generic [ref=e1307]:
+              - generic [ref=e1308]: Optimized
+              - generic [ref=e1310]: 430ms
+          - generic [ref=e1311]:
+            - text: 2.2× faster
+            - generic [ref=e1312]: speedup
+          - generic [ref=e1313]:
+            - text: "📸 Spark UI:"
+            - strong [ref=e1314]: "SQL tab: SortMergeJoin → BroadcastHashJoin"
+        - generic [ref=e1315]:
+          - generic [ref=e1316]:
+            - generic [ref=e1317]: 🔀
+            - generic [ref=e1318]:
+              - generic [ref=e1319]: O3
+              - generic [ref=e1320]: Shuffle Partitions
+          - code [ref=e1321]: spark.conf.set('spark.sql.shuffle.partitions', 8)
+          - paragraph [ref=e1322]:
+            - strong [ref=e1323]: "Problem:"
+            - text: Default 200 shuffle partitions → 200 tiny tasks on 4 cores (huge overhead)
+            - strong [ref=e1324]: "Fix:"
+            - text: 2 × cores = 8 right-sized partitions
+          - generic [ref=e1325]:
+            - generic [ref=e1326]:
+              - generic [ref=e1327]: Baseline
+              - generic [ref=e1329]: 970ms
+            - generic [ref=e1330]:
+              - generic [ref=e1331]: Optimized
+              - generic [ref=e1333]: 220ms
+          - generic [ref=e1334]:
+            - text: 4.4× faster
+            - generic [ref=e1335]: speedup
+          - generic [ref=e1336]:
+            - text: "📸 Spark UI:"
+            - strong [ref=e1337]: "Stages tab: 200 tasks → 8 tasks"
+        - generic [ref=e1338]:
+          - generic [ref=e1339]:
+            - generic [ref=e1340]: 🧠
+            - generic [ref=e1341]:
+              - generic [ref=e1342]: O4
+              - generic [ref=e1343]: Adaptive Query Execution
+          - code [ref=e1344]: spark.conf.set('spark.sql.adaptive.enabled', True)
+          - paragraph [ref=e1345]:
+            - strong [ref=e1346]: "Problem:"
+            - text: Static plan uses 200 shuffle partitions regardless of actual data size
+            - strong [ref=e1347]: "Fix:"
+            - text: AQE merges tiny shuffle partitions at runtime based on real statistics
+          - generic [ref=e1348]:
+            - generic [ref=e1349]:
+              - generic [ref=e1350]: Baseline
+              - generic [ref=e1352]: 970ms
+            - generic [ref=e1353]:
+              - generic [ref=e1354]: Optimized
+              - generic [ref=e1356]: 340ms
+          - generic [ref=e1357]:
+            - text: 2.8× faster
+            - generic [ref=e1358]: speedup
+          - generic [ref=e1359]:
+            - text: "📸 Spark UI:"
+            - strong [ref=e1360]: SQL tab shows AQEShuffleRead coalescing
+        - generic [ref=e1361]:
+          - generic [ref=e1362]:
+            - generic [ref=e1363]: 📁
+            - generic [ref=e1364]:
+              - generic [ref=e1365]: O5
+              - generic [ref=e1366]: Parquet vs CSV
+          - code [ref=e1367]: spark.read.parquet(path) vs spark.read.csv(path)
+          - paragraph [ref=e1368]:
+            - strong [ref=e1369]: "Problem:"
+            - text: "CSV: 326 MB, must read every column and parse all text"
+            - strong [ref=e1370]: "Fix:"
+            - text: "Parquet: 50 MB, columnar — reads only needed columns + predicate pushdown"
+          - generic [ref=e1371]:
+            - generic [ref=e1372]:
+              - generic [ref=e1373]: Baseline
+              - generic [ref=e1375]: 1.84s
+            - generic [ref=e1376]:
+              - generic [ref=e1377]: Optimized
+              - generic [ref=e1379]: 220ms
+          - generic [ref=e1380]:
+            - text: 8.4× faster
+            - generic [ref=e1381]: speedup
+          - generic [ref=e1382]:
+            - text: "📸 Spark UI:"
+            - strong [ref=e1383]: FileScan shows 2-column ReadSchema + PushedFilters
+    - generic [ref=e1384]:
+      - generic [ref=e1385]:
+        - generic [ref=e1386]: "07"
+        - generic [ref=e1387]:
+          - heading "Step 7 — Performance Analysis" [level=2] [ref=e1388]
+          - paragraph [ref=e1389]: Pandas vs PySpark · Core scaling · Amdahl's Law · Smart City insights
+      - generic [ref=e1390]:
+        - generic [ref=e1391]:
+          - heading "📊 Pandas vs PySpark — Same Job at Different Sizes" [level=3] [ref=e1392]
+          - generic [ref=e1394]:
+            - generic [ref=e1395]:
+              - text: ⚠️
+              - strong [ref=e1396]: Pandas wins
+              - text: on small data — no Spark startup overhead
+            - generic [ref=e1397]:
+              - text: ✅
+              - strong [ref=e1398]: Spark catches up
+              - text: at ~3M rows and scales beyond memory
+        - generic [ref=e1399]:
+          - heading "⚙️ Core Scaling — Amdahl's Law" [level=3] [ref=e1400]
+          - generic [ref=e1402]: ⚡ 4 cores → 2.7× (not 4×) — file I/O and task scheduling are fixed overheads
+      - generic [ref=e1403]:
+        - heading "🔁 Full Pipeline Walkthrough" [level=3] [ref=e1404]
+        - generic [ref=e1405]:
+          - generic [ref=e1406]:
+            - generic [ref=e1409]: 1. SparkSession created
+            - generic [ref=e1410]: master=local[*], 4GB driver memory, AQE enabled
+            - generic [ref=e1411]: spark = SparkSession.builder.appName('SmartCityNYC').master('local[*]') .config('spark.sql.adaptive.enabled', True).getOrCreate()
+          - generic [ref=e1412]:
+            - generic [ref=e1415]: 2. Data Ingestion (6 sources)
+            - generic [ref=e1416]: Parquet · CSV with explicit schema · Nested JSON flattened · Live REST API · Explicit StructType schemas
+            - generic [ref=e1417]: trips = spark.read.parquet('yellow_tripdata_2024-01.parquet') zones = spark.read.csv('taxi_zones.csv', header=True, schema=zone_schema) complaints = spark.read.csv('data/311/', header=True, multiLine=True) air_df = raw.select(arrays_zip(...)).select(explode(...))
+          - generic [ref=e1418]:
+            - generic [ref=e1421]: 3. Distributed Processing
+            - generic [ref=e1422]: 2.96M rows split into 4 partitions across 4 CPU cores
+            - generic [ref=e1423]: "print(trips.rdd.getNumPartitions()) # 4 trips.groupBy(spark_partition_id()).count().show()"
+          - generic [ref=e1424]:
+            - generic [ref=e1427]: 4. Data Cleaning
+            - generic [ref=e1428]: 6 quality rules in one pass — lazy plan, triggered by count()
+            - generic [ref=e1429]: "trips_clean = trips .filter((col('fare_amount') > 0) & (col('trip_distance').between(0,100))) .withColumn('pickup_hour', hour('tpep_pickup_datetime')) .withColumn('trip_duration_min', ...) trips_clean.count() # ACTION — runs everything above"
+          - generic [ref=e1430]:
+            - generic [ref=e1433]: 5. 10 Analytical Queries
+            - generic [ref=e1434]: groupBy · join · window · pivot · corr · SQL — all lazy until toPandas()
+            - generic [ref=e1435]: "q1 = trips_clean.groupBy('pickup_hour').agg(count('*'), avg('fare_amount')) # SAME query in Spark SQL: createOrReplaceTempView('trips', trips_clean) q1_sql = spark.sql('SELECT pickup_hour, COUNT(*), AVG(fare_amount) ...')"
+          - generic [ref=e1436]:
+            - generic [ref=e1439]: 6. Performance Optimizations
+            - generic [ref=e1440]: 5 measured optimizations · noop writer · median of 3 runs
+            - generic [ref=e1441]: "trips.cache() # O1 F.broadcast(zones) # O2 spark.conf.set('spark.sql.shuffle.partitions',8) # O3 spark.conf.set('spark.sql.adaptive.enabled',True)# O4 spark.read.parquet(...) # vs CSV # O5"
+          - generic [ref=e1442]:
+            - generic [ref=e1445]: 7. Save Outputs
+            - generic [ref=e1446]: Cleaned Parquet → downstream jobs · CSVs + PNGs for report
+            - generic [ref=e1447]: trips_clean.write.mode('overwrite').parquet('data/processed/trips_clean') q1.toPandas().to_csv('outputs/results/q1_hourly.csv', index=False)
+    - generic [ref=e1448]:
+      - generic [ref=e1449]:
+        - generic [ref=e1450]: ✨
+        - generic [ref=e1451]:
+          - heading "Smart City Insights" [level=2] [ref=e1452]
+          - paragraph [ref=e1453]: Key findings computed from all 10 queries · real NYC Jan 2024 data
+      - generic [ref=e1454]:
+        - generic [ref=e1455]:
+          - generic [ref=e1456]: 🕔
+          - generic [ref=e1457]:
+            - generic [ref=e1458]: Peak Hour
+            - generic [ref=e1459]: 6 PM (18:00)
+            - generic [ref=e1460]: 158,000 trips/hr
+        - generic [ref=e1461]:
+          - generic [ref=e1462]: 📍
+          - generic [ref=e1463]:
+            - generic [ref=e1464]: Busiest Hub
+            - generic [ref=e1465]: Midtown Center
+            - generic [ref=e1466]: 89,432 pickups
+        - generic [ref=e1467]:
+          - generic [ref=e1468]: 📞
+          - generic [ref=e1469]:
+            - generic [ref=e1470]: Top Complaint
+            - generic [ref=e1471]: HEAT/HOT WATER
+            - generic [ref=e1472]: 38,492 requests (15.9%)
+        - generic [ref=e1473]:
+          - generic [ref=e1474]: ⚡
+          - generic [ref=e1475]:
+            - generic [ref=e1476]: Fastest Agency
+            - generic [ref=e1477]: NYPD
+            - generic [ref=e1478]: 4.2 hrs median
+        - generic [ref=e1479]:
+          - generic [ref=e1480]: 🐢
+          - generic [ref=e1481]:
+            - generic [ref=e1482]: Slowest Agency
+            - generic [ref=e1483]: DOB
+            - generic [ref=e1484]: 120.8 hrs median
+        - generic [ref=e1485]:
+          - generic [ref=e1486]: 🌡️
+          - generic [ref=e1487]:
+            - generic [ref=e1488]: Temp-Complaint Corr
+            - generic [ref=e1489]: r = −0.89
+            - generic [ref=e1490]: "Strong: cold → more HEAT complaints"
+        - generic [ref=e1491]:
+          - generic [ref=e1492]: 🚗
+          - generic [ref=e1493]:
+            - generic [ref=e1494]: Traffic-NO₂ Corr
+            - generic [ref=e1495]: r = +0.74
+            - generic [ref=e1496]: Traffic drives air pollution
+        - generic [ref=e1497]:
+          - generic [ref=e1498]: 🐌
+          - generic [ref=e1499]:
+            - generic [ref=e1500]: Slowest Borough
+            - generic [ref=e1501]: Manhattan
+            - generic [ref=e1502]: Avg 12.4 mph right now
+      - generic [ref=e1503]:
+        - generic [ref=e1504]:
+          - generic [ref=e1505]: 🛠️
+          - heading "Tools & Technologies Used" [level=3] [ref=e1506]
+        - table [ref=e1508]:
+          - rowgroup [ref=e1509]:
+            - row [ref=e1510]:
+              - columnheader "Tool" [ref=e1511]
+              - columnheader "Purpose" [ref=e1512]
+              - columnheader "Where Used" [ref=e1513]
+          - rowgroup [ref=e1514]:
+            - row [ref=e1515]:
+              - cell "PySpark 3.5+" [ref=e1516]
+              - cell "All loading, cleaning, joins, aggregations, optimizations" [ref=e1517]
+              - cell "Steps 1–6" [ref=e1518]
+            - row [ref=e1519]:
+              - cell "Spark SQL" [ref=e1520]
+              - cell "Q1 written as SQL — same optimizer as DataFrame API" [ref=e1521]
+              - cell "Q1" [ref=e1522]
+            - row [ref=e1523]:
+              - cell "Pandas" [ref=e1524]
+              - cell "Displaying small results, benchmark comparison" [ref=e1525]
+              - cell "Steps 2, 7" [ref=e1526]
+            - row [ref=e1527]:
+              - cell "NYC Open Data" [ref=e1528]
+              - cell "311 requests (250k rows), live traffic speeds" [ref=e1529]
+              - cell "Step 2" [ref=e1530]
+            - row [ref=e1531]:
+              - cell "Open-Meteo API" [ref=e1532]
+              - cell "Air quality + weather (hourly JSON, no API key)" [ref=e1533]
+              - cell "Step 2" [ref=e1534]
+            - row [ref=e1535]:
+              - cell "Parquet" [ref=e1536]
+              - cell "326MB CSV → 50MB · 8× faster read · column pruning" [ref=e1537]
+              - cell "O5" [ref=e1538]
+            - row [ref=e1539]:
+              - cell "Spark UI :4040" [ref=e1540]
+              - cell "DAG · stages · shuffle sizes · cache · plan proofs" [ref=e1541]
+              - cell "Steps 3–6" [ref=e1542]
+            - row [ref=e1543]:
+              - cell "Matplotlib" [ref=e1544]
+              - cell "Charts for all 10 query results" [ref=e1545]
+              - cell "Step 5" [ref=e1546]
+      - generic [ref=e1547]:
+        - heading "👥 Team — Case Study 2 · Unit 5.2" [level=3] [ref=e1548]
+        - generic [ref=e1549]:
+          - generic [ref=e1550]:
+            - generic [ref=e1551]: Varun Murugan
+            - generic [ref=e1552]: 124A8118
+          - generic [ref=e1553]:
+            - generic [ref=e1554]: Rankin Yanu
+            - generic [ref=e1555]: 124A8124
+          - generic [ref=e1556]:
+            - generic [ref=e1557]: Navin Nadar
+            - generic [ref=e1558]: 225A8134
+          - generic [ref=e1559]:
+            - generic [ref=e1560]: Abhay Hanchate
+            - generic [ref=e1561]: 225A8129
+    - contentinfo [ref=e1562]:
+      - generic [ref=e1563]:
+        - text: 🏙️
+        - strong [ref=e1564]: Smart City NYC
+        - text: — Data Processing using Spark DataFrames
+      - generic [ref=e1565]: PySpark · Pandas · NYC Open Data · Open-Meteo · Case Study 2 · Unit 5.2

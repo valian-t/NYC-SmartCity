@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart City NYC — Spark Pipeline Visualizer</title>
+  <meta name="description" content="Interactive end-to-end PySpark data pipeline: ingestion, distributed processing, transformation, 10 queries, 5 optimizations — Smart City NYC." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-overlay" id="loading">
+  <div class="loading-inner">
+    <div class="loader-ring"></div>
+    <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;color:#0f172a;margin-top:16px">Smart City NYC</div>
+    <div class="loader-text">Initializing SparkSession...</div>
+    <div class="loader-steps">
+      <div class="loader-step" id="ls1">✓ Java 17 detected</div>
+      <div class="loader-step" id="ls2">✓ PySpark 3.5.1 loaded</div>
+      <div class="loader-step" id="ls3">✓ local[*] — 4 cores ready</div>
+      <div class="loader-step" id="ls4">✓ AQE enabled</div>
+      <div class="loader-step" id="ls5">✓ Pipeline ready</div>
+    </div>
+  </div>
+</div>
+
+<canvas id="bg-canvas"></canvas>
+
+<div id="app">
+
+  <!-- ═══ TOP NAV ═══════════════════════════════════════════ -->
+  <nav class="top-nav">
+    <div class="nav-brand">
+      <div class="logo-icon">🏙️</div>
+      <span class="brand-text">Smart City <em>NYC</em></span>
+    </div>
+    <div class="nav-stages">
+      <button class="nav-stage-btn active" data-section="section-hero">Home</button>
+      <button class="nav-stage-btn" data-section="section-dag">DAG</button>
+      <button class="nav-stage-btn" data-section="section-setup">Setup</button>
+      <button class="nav-stage-btn" data-section="section-fetch">Live Fetch</button>
+      <button class="nav-stage-btn" data-section="section-ingest">Ingest</button>
+      <button class="nav-stage-btn" data-section="section-process">Distribute</button>
+      <button class="nav-stage-btn" data-section="section-clean">Clean</button>
+      <button class="nav-stage-btn" data-section="section-queries">Queries</button>
+      <button class="nav-stage-btn" data-section="section-optim">Optimize</button>
+      <button class="nav-stage-btn" data-section="section-benchmark">Benchmark</button>
+      <button class="nav-stage-btn" data-section="section-insights">Insights</button>
+    </div>
+    <div class="nav-status">
+      <div class="status-dot"></div>
+      <span>Spark Active</span>
+      <span class="nav-spark-version">v3.5.1</span>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ══════════════════════════════════════════════ -->
+  <section id="section-hero" class="hero-section">
+    <div class="hero-bg-grid"></div>
+
+    <div class="hero-badge">
+      <div class="dot"></div>
+      Case Study 2 · Unit 5.2 DataFrames · PySpark + Pandas
+    </div>
+
+    <h1 class="hero-title">
+      <span class="line1">NYC Smart City</span>
+      <span class="line2">Data Pipeline</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      An end-to-end <strong>PySpark pipeline</strong> ingesting 5 live NYC data sources,
+      processing 3M+ rows across 4 CPU cores, answering 10 analytical queries,
+      and achieving up to <strong style="color:var(--green)">8.4× speedup</strong> through optimizations.
+    </p>
+
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <span class="hero-stat-value" id="hero-c1" data-val="2964624">2.96M</span>
+        <span class="hero-stat-label">Taxi Trips</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-value" id="hero-c2" data-val="249832">249k</span>
+        <span class="hero-stat-label">311 Requests</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-value" style="color:var(--purple)">5</span>
+        <span class="hero-stat-label">Data Sources</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-value" style="color:var(--amber)">10</span>
+        <span class="hero-stat-label">Queries</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-value" style="color:var(--green)">8.4×</span>
+        <span class="hero-stat-label">Max Speedup</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-value" style="color:var(--pink)">4</span>
+        <span class="hero-stat-label">CPU Cores</span>
+      </div>
+    </div>
+
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="scrollTo('section-dag')">
+        <span>🗺️</span> Explore Pipeline
+      </button>
+      <button class="btn-ghost" onclick="scrollTo('section-fetch')">
+        <span>⚡</span> Live Data Fetch
+      </button>
+    </div>
+
+    <div class="hero-pipeline-preview">
+      <div class="hpp-step" style="--c:var(--cyan)">📥<br><small>Ingest</small></div>
+      <div class="hpp-arrow">→</div>
+      <div class="hpp-step" style="--c:var(--purple)">🔧<br><small>Clean</small></div>
+      <div class="hpp-arrow">→</div>
+      <div class="hpp-step" style="--c:var(--purple)">🔀<br><small>Distribute</small></div>
+      <div class="hpp-arrow">→</div>
+      <div class="hpp-step" style="--c:var(--amber)">🔍<br><small>Query</small></div>
+      <div class="hpp-arrow">→</div>
+      <div class="hpp-step" style="--c:var(--green)">⚡<br><small>Optimize</small></div>
+      <div class="hpp-arrow">→</div>
+      <div class="hpp-step" style="--c:var(--pink)">📊<br><small>Output</small></div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-arrow"></div>
+      <span>scroll to explore</span>
+    </div>
+  </section>
+
+
+  <!-- ═══ DAG OVERVIEW ═══════════════════════════════════════ -->
+  <section id="section-dag" class="pipeline-section dag-section">
+    <div class="section-header">
+      <div class="section-number">DAG</div>
+      <div class="section-titles">
+        <h2>Pipeline Architecture — Directed Acyclic Graph</h2>
+        <p>Full data flow with animated particles · hover nodes to inspect · Spark builds this graph internally</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap">
+      <div class="legend-pill" style="--lc:var(--cyan)"><span></span>Data Sources</div>
+      <div class="legend-pill" style="--lc:var(--purple)"><span></span>Spark Engine</div>
+      <div class="legend-pill" style="--lc:var(--amber)"><span></span>Outputs</div>
+      <div class="legend-pill" style="--lc:rgba(0,212,255,0.5)"><span style="width:20px;height:2px;border-radius:1px"></span>Data Flow</div>
+    </div>
+
+    <div class="dag-container glass-card" id="dag-container"></div>
+
+    <div class="narrow-wide-grid">
+      <div class="glass-card narrow-wide-card" style="border-color:rgba(0,212,255,0.3)">
+        <div class="nw-header" style="color:var(--cyan)">🔹 Narrow Transformations</div>
+        <p>Data stays in its own partition — <strong>no shuffle</strong>. Fast and cheap.</p>
+        <div class="op-tags-row">
+          <span class="op-tag narrow">filter()</span>
+          <span class="op-tag narrow">select()</span>
+          <span class="op-tag narrow">withColumn()</span>
+          <span class="op-tag narrow">fillna()</span>
+        </div>
+      </div>
+      <div class="glass-card narrow-wide-card" style="border-color:rgba(245,158,11,0.3)">
+        <div class="nw-header" style="color:var(--amber)">🔶 Wide Transformations (Shuffle)</div>
+        <p>Rows move between partitions across cores. Expensive — triggers a <strong>shuffle</strong>.</p>
+        <div class="op-tags-row">
+          <span class="op-tag">groupBy()</span>
+          <span class="op-tag">join()</span>
+          <span class="op-tag">orderBy()</span>
+          <span class="op-tag">distinct()</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SETUP ══════════════════════════════════════════════ -->
+  <section id="section-setup" class="pipeline-section">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-titles">
+        <h2>Step 1 — SparkSession Setup</h2>
+        <p>Entry point to Spark · driver config · AQE · Spark UI · local[*] parallelism</p>
+      </div>
+    </div>
+
+    <div class="setup-grid">
+      <div>
+        <div id="spark-config-grid" class="spark-config-grid"></div>
+        <div class="code-block" style="margin-top:20px">
+          <div class="code-block-header">
+            <span class="code-lang">Python (PySpark)</span>
+            <span class="code-label">Step 1 — SparkSession</span>
+          </div>
+          <pre><span class="kw">from</span> pyspark.sql <span class="kw">import</span> SparkSession
+
+spark = (SparkSession.builder
+  .appName(<span class="str">"SmartCityNYC"</span>)
+  .master(<span class="str">"local[*]"</span>)
+  .config(<span class="str">"spark.driver.memory"</span>, <span class="str">"4g"</span>)
+  .config(<span class="str">"spark.sql.adaptive.enabled"</span>, <span class="kw">True</span>)
+  .config(<span class="str">"spark.sql.adaptive.coalescePartitions.enabled"</span>, <span class="kw">True</span>)
+  .getOrCreate())
+
+<span class="cm"># Prove it works</span>
+<span class="fn">print</span>(f<span class="str">"Spark {spark.version}"</span>)
+<span class="fn">print</span>(f<span class="str">"Cores: {spark.sparkContext.defaultParallelism}"</span>)
+<span class="fn">print</span>(f<span class="str">"UI: http://localhost:4040"</span>)</pre>
+        </div>
+      </div>
+
+      <div class="setup-arch-card glass-card">
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:20px">How Spark Runs on This Machine</h3>
+        <div class="arch-diagram">
+          <div class="arch-driver">
+            <div class="arch-node driver-node">
+              <span class="arch-icon">🧑‍💻</span>
+              <div class="arch-node-title">Driver</div>
+              <div class="arch-node-sub">Our Notebook (4GB RAM)</div>
+              <div class="arch-node-detail">• Builds query plan<br>• Schedules tasks<br>• Collects results<br>• Hosts Spark UI :4040</div>
+            </div>
+          </div>
+          <div class="arch-arrow-down">↓ distributes tasks</div>
+          <div class="arch-executors">
+            <div class="arch-node executor-node" v-for="i in 4">
+              <span class="arch-icon">⚙️</span>
+              <div class="arch-node-title">Core 0</div>
+              <div class="arch-node-sub">Partition 0</div>
+            </div>
+            <div class="arch-node executor-node">
+              <span class="arch-icon">⚙️</span>
+              <div class="arch-node-title">Core 1</div>
+              <div class="arch-node-sub">Partition 1</div>
+            </div>
+            <div class="arch-node executor-node">
+              <span class="arch-icon">⚙️</span>
+              <div class="arch-node-title">Core 2</div>
+              <div class="arch-node-sub">Partition 2</div>
+            </div>
+            <div class="arch-node executor-node">
+              <span class="arch-icon">⚙️</span>
+              <div class="arch-node-title">Core 3</div>
+              <div class="arch-node-sub">Partition 3</div>
+            </div>
+          </div>
+          <div class="arch-note">local[*] = driver + executors on one machine. Same code on a cluster: change master to spark://...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INTERACTIVE LIVE FETCH ═════════════════════════════ -->
+  <section id="section-fetch" class="pipeline-section fetch-section">
+    <div class="section-header">
+      <div class="section-number" style="background:linear-gradient(135deg,rgba(239,68,68,0.2),rgba(245,158,11,0.2))">⚡</div>
+      <div class="section-titles">
+        <h2>Interactive Data Fetch Simulator</h2>
+        <p>Click any source to simulate a live data fetch → parse → Spark DataFrame creation pipeline</p>
+      </div>
+    </div>
+
+    <div class="fetch-layout">
+      <!-- Source selector -->
+      <div class="fetch-sources-panel">
+        <div class="fetch-panel-title">Select Data Source</div>
+        <div class="fetch-source-list" id="fetch-source-list"></div>
+      </div>
+
+      <!-- Terminal / console -->
+      <div class="fetch-terminal-panel">
+        <div class="terminal-titlebar">
+          <div class="terminal-dots">
+            <span style="background:#ef4444"></span>
+            <span style="background:#f59e0b"></span>
+            <span style="background:#10b981"></span>
+          </div>
+          <div class="terminal-title">PySpark Console — SmartCityNYC</div>
+          <div class="terminal-status" id="fetch-status-badge">IDLE</div>
+        </div>
+        <div class="terminal-body" id="terminal-body">
+          <div class="terminal-line dim">▶ SparkSession active — waiting for data source selection...</div>
+          <div class="terminal-line dim">▶ Select a source on the left to simulate a live fetch</div>
+        </div>
+        <div class="terminal-footer">
+          <button class="terminal-btn btn-primary" id="fetch-run-btn" disabled>▶ Run Fetch</button>
+          <button class="terminal-btn btn-ghost" id="fetch-clear-btn">⌫ Clear</button>
+          <div class="terminal-progress-wrap">
+            <div class="terminal-progress-bar" id="fetch-progress-bar" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DataFrame output -->
+    <div class="fetch-output" id="fetch-output" style="display:none">
+      <div class="fetch-output-tabs">
+        <button class="fot-btn active" data-tab="schema">Schema</button>
+        <button class="fot-btn" data-tab="preview">Data Preview</button>
+        <button class="fot-btn" data-tab="stats">Stats</button>
+        <button class="fot-btn" data-tab="code">PySpark Code</button>
+      </div>
+      <div class="fetch-output-body" id="fetch-output-body"></div>
+    </div>
+
+    <!-- Spark internals during fetch -->
+    <div class="spark-internals-row" id="spark-internals" style="display:none">
+      <div class="si-card" id="si-job">
+        <div class="si-label">Spark Job</div>
+        <div class="si-value" id="si-job-val">—</div>
+      </div>
+      <div class="si-card" id="si-stages">
+        <div class="si-label">Stages</div>
+        <div class="si-value" id="si-stages-val">—</div>
+      </div>
+      <div class="si-card" id="si-tasks">
+        <div class="si-label">Tasks</div>
+        <div class="si-value" id="si-tasks-val">—</div>
+      </div>
+      <div class="si-card" id="si-partitions">
+        <div class="si-label">Partitions</div>
+        <div class="si-value" id="si-partitions-val">—</div>
+      </div>
+      <div class="si-card" id="si-rows">
+        <div class="si-label">Rows Read</div>
+        <div class="si-value" id="si-rows-val">—</div>
+      </div>
+      <div class="si-card" id="si-time">
+        <div class="si-label">Exec Time</div>
+        <div class="si-value" id="si-time-val">—</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ INGESTION ══════════════════════════════════════════ -->
+  <section id="section-ingest" class="pipeline-section">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-titles">
+        <h2>Step 2 — Data Ingestion</h2>
+        <p>5 sources · Parquet · CSV with explicit schemas · Live REST API</p>
+      </div>
+    </div>
+
+    <div id="sources-grid" class="sources-grid"></div>
+
+    <div id="schema-panel" class="schema-panel" style="margin-top:24px"></div>
+    <div id="data-preview-panel" class="schema-panel" style="margin-top:16px"></div>
+  </section>
+
+  <!-- ═══ DISTRIBUTED PROCESSING ════════════════════════════ -->
+  <section id="section-process" class="pipeline-section">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div class="section-titles">
+        <h2>Step 3 — Distributed Processing</h2>
+        <p>Partitions · Tasks · Stages · Jobs — Spark's core parallelism mechanism</p>
+      </div>
+    </div>
+
+    <div class="dist-grid">
+      <div class="glass-card dist-partitions-card">
+        <h3 style="font-size:15px;font-weight:700;margin-bottom:4px">📦 4 Partitions — 4 Cores</h3>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:20px">2,964,624 taxi rows split equally. Each core owns one partition.</p>
+        <div id="partitions-grid" class="partitions-grid"></div>
+        <div id="cores-visual" class="cores-visual" style="margin-top:16px"></div>
+      </div>
+
+      <div>
+        <div class="glass-card" style="padding:24px;margin-bottom:16px">
+          <h3 style="font-size:15px;font-weight:700;margin-bottom:16px">⚡ How a GroupBy Job Runs</h3>
+          <div class="job-stages-viz" id="job-stages-viz"></div>
+        </div>
+
+        <div class="glass-card" style="padding:24px">
+          <h3 style="font-size:15px;font-weight:700;margin-bottom:12px">🔎 Physical Plan (Q1 explain)</h3>
+          <pre class="explain-plan">== Physical Plan ==
+Sort [pickup_hour ASC], true
++- Exchange rangepartitioning(pickup_hour, 8)
+   +- HashAggregate(keys=[pickup_hour])
+      +- <span class="plan-shuffle">Exchange hashpartitioning(pickup_hour, 8)</span> <span class="plan-label">← SHUFFLE</span>
+         +- HashAggregate(partial_count, partial_avg)
+            +- Project [fare_amount, hour(tpep_pickup_datetime)]
+               +- Filter (fare_amount &gt; 0 AND distance BETWEEN 0 AND 100)
+                  +- <span class="plan-scan">FileScan parquet [2 cols]</span> <span class="plan-label">← predicate pushdown</span></pre>
+          <div class="plan-legend">
+            <span class="chip chip-cyan">FileScan</span>
+            <span class="chip chip-purple">partial_agg</span>
+            <span class="chip chip-red">Exchange = shuffle</span>
+            <span class="chip chip-green">HashAggregate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CLEANING ══════════════════════════════════════════ -->
+  <section id="section-clean" class="pipeline-section">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <div class="section-titles">
+        <h2>Step 4 — Cleaning &amp; Transformation</h2>
+        <p>filter · withColumn · dropDuplicates · try_cast · fillna · create_map · window functions</p>
+      </div>
+    </div>
+    <div id="cleaning-container"></div>
+  </section>
+
+  <!-- ═══ QUERIES ════════════════════════════════════════════ -->
+  <section id="section-queries" class="pipeline-section">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <div class="section-titles">
+        <h2>Step 5 — 10 Analytical Queries</h2>
+        <p>Click ▼ on any card to expand the live chart · groupBy · join · window · pivot · corr · Spark SQL</p>
+      </div>
+    </div>
+
+    <div class="query-cats">
+      <span class="chip chip-cyan">🚕 Q1–Q3 Mobility</span>
+      <span class="chip chip-purple">🏛️ Q4–Q6 Citizen Services</span>
+      <span class="chip chip-green">🌫️ Q7–Q8 Environment</span>
+      <span class="chip chip-red">🚦 Q9 Live Traffic</span>
+      <span class="chip chip-amber">🏙️ Q10 Borough Scorecard</span>
+    </div>
+
+    <div id="queries-grid" class="queries-grid"></div>
+  </section>
+
+  <!-- ═══ OPTIMIZATIONS ═════════════════════════════════════ -->
+  <section id="section-optim" class="pipeline-section">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <div class="section-titles">
+        <h2>Step 6 — Performance Optimizations</h2>
+        <p>5 optimizations · baseline vs optimized · median of 3 runs · noop writer for fairness</p>
+      </div>
+    </div>
+
+    <div class="opt-summary-row">
+      <div class="opt-summary-card">
+        <div class="opt-summary-icon">📐</div>
+        <div class="opt-summary-title">Fair Measurement</div>
+        <div class="opt-summary-desc">noop writer excludes I/O time · median of 3 runs eliminates outliers</div>
+      </div>
+      <div class="opt-summary-card">
+        <div class="opt-summary-icon">📸</div>
+        <div class="opt-summary-title">Spark UI Proof</div>
+        <div class="opt-summary-desc">Storage / SQL / Stages tabs confirm each optimization visually</div>
+      </div>
+      <div class="opt-summary-card">
+        <div class="opt-summary-icon">🏆</div>
+        <div class="opt-summary-title">Best: 8.4× Speedup</div>
+        <div class="opt-summary-desc">Parquet vs CSV — columnar + predicate pushdown wins by far</div>
+      </div>
+    </div>
+
+    <div id="opts-grid" class="opts-grid"></div>
+  </section>
+
+  <!-- ═══ BENCHMARK ══════════════════════════════════════════ -->
+  <section id="section-benchmark" class="pipeline-section">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <div class="section-titles">
+        <h2>Step 7 — Performance Analysis</h2>
+        <p>Pandas vs PySpark · Core scaling · Amdahl's Law · Smart City insights</p>
+      </div>
+    </div>
+
+    <div class="benchmark-grid">
+      <div class="benchmark-chart-wrap glass-card">
+        <h3 class="chart-title">📊 Pandas vs PySpark — Same Job at Different Sizes</h3>
+        <canvas id="benchmark-chart" height="260"></canvas>
+        <div class="bm-note-row">
+          <div class="bm-note amber">⚠️ <strong>Pandas wins</strong> on small data — no Spark startup overhead</div>
+          <div class="bm-note cyan">✅ <strong>Spark catches up</strong> at ~3M rows and scales beyond memory</div>
+        </div>
+      </div>
+      <div class="benchmark-chart-wrap glass-card">
+        <h3 class="chart-title">⚙️ Core Scaling — Amdahl's Law</h3>
+        <canvas id="core-scaling-chart" height="260"></canvas>
+        <div class="bm-note purple">⚡ 4 cores → 2.7× (not 4×) — file I/O and task scheduling are fixed overheads</div>
+      </div>
+    </div>
+
+
+  </section>
+
+  <!-- ═══ SMART CITY INSIGHTS ════════════════════════════════ -->
+  <section id="section-insights" class="pipeline-section insights-section">
+    <div class="section-header">
+      <div class="section-number">✨</div>
+      <div class="section-titles">
+        <h2>Smart City Insights</h2>
+        <p>Key findings computed from all 10 queries · real NYC Jan 2024 data</p>
+      </div>
+    </div>
+
+    <div id="insights-grid" class="insights-grid"></div>
+
+
+    <!-- Team -->
+    <div class="glass-card" style="margin-top:24px;padding:28px">
+      <h3 style="font-size:15px;font-weight:700;margin-bottom:16px">👥 Team — Case Study 2 · Unit 5.2</h3>
+      <div class="team-grid">
+        <div class="team-card"><div class="team-name">Varun Murugan</div><div class="team-roll">124A8118</div></div>
+        <div class="team-card"><div class="team-name">Rankin Yanu</div><div class="team-roll">124A8124</div></div>
+        <div class="team-card"><div class="team-name">Navin Nadar</div><div class="team-roll">225A8134</div></div>
+        <div class="team-card"><div class="team-name">Abhay Hanchate</div><div class="team-roll">225A8129</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>🏙️ <strong>Smart City NYC</strong> — Data Processing using Spark DataFrames</div>
+    <div style="margin-top:6px;font-size:12px">PySpark · Pandas · NYC Open Data · Open-Meteo · Case Study 2 · Unit 5.2</div>
+  </footer>
+
+</div><!-- #app -->
+
+<div class="tooltip" id="tooltip"></div>
+
+<script src="data.js"></script>
+<script src="dag.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
